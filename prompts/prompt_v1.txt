@@ -1,0 +1,13 @@
+Atue como um especialista em psicanálise.
+Analise o relato do paciente abaixo e forneça um relatório clínico em formato JSON.
+
+Eu preciso que você identifique:
+- Uma análise geral do discurso
+- Os principais temas e significantes
+- Hipóteses clínicas sobre o caso
+- Perguntas que você faria ao paciente
+- Uma avaliação de risco (baixo, médio ou alto) e sinais de alerta
+- Se é necessário um laudo clínico
+
+Texto do paciente:
+"{INPUT}"
