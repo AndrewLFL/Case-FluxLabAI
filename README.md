@@ -11,7 +11,7 @@ Para que o pipeline utilize o modelo real (GPT-4o-mini), é necessário configur
 
 ```env
 OPENAI_API_KEY=sk-proj-sua-chave-aqui...
-
+```
 ## 📋 Funcionalidades
 
 * **Ingestão de Dados:** Leitura de múltiplos arquivos clínicos (`.txt`).
