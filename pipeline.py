@@ -124,13 +124,7 @@ def call_model(prompt: str) -> str:
     """
     # Definição do Mock (Backup)
     mock_response = {
-        "analysis": """O paciente apresenta uma clara manifestação de resistência transferencial através do manejo do tempo e da palavra. 
-            O atraso recorrente ('sempre') configura-se como um acting out, 
-            uma tentativa de controlar o setting analítico ou evitar o contato com conteúdos angustiantes. 
-            A percepção de que faz isso 'de propósito' sugere um insight incipiente sobre a determinação inconsciente de seus atos e uma possível formação de compromisso sintomática. 
-            O silêncio que se segue à chegada atua como uma barreira secundária, reforçando a recusa em se entregar à associação livre. 
-            Essa dinâmica aponta para uma dificuldade em lidar com a demanda do Outro, 
-            possivelmente expressando hostilidade latente ou medo da dependência.""",
+        "analysis": "O paciente apresenta uma clara manifestação de resistência transferencial através do manejo do tempo e da palavra. O atraso recorrente ('sempre') configura-se como um acting out, uma tentativa de controlar o setting analítico ou evitar o contato com conteúdos angustiantes. A percepção de que faz isso 'de propósito' sugere um insight incipiente sobre a determinação inconsciente de seus atos e uma possível formação de compromisso sintomática. O silêncio que se segue à chegada atua como uma barreira secundária, reforçando a recusa em se entregar à associação livre. Essa dinâmica aponta para uma dificuldade em lidar com a demanda do Outro, possivelmente expressando hostilidade latente ou medo da dependência.",
         "themes": ["Resistência", "Transferência", "Controle", "Silêncio", "Tempo"],
         "signifiers": ["Atrasado", "Propósito", "Silêncio", "Sempre", "Chego"],
         "hypotheses": [

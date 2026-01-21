@@ -1,7 +1,7 @@
 # Notas de Engenharia & Decisões Arquiteturais
 
 ## 1. Visão Geral
-Este projeto implementa um pipeline de Engenharia de IA para análise de textos clínicos psicanalíticos. O objetivo central foi criar uma arquitetura resiliente que garanta saídas estruturadas e seguras, independentemente da variabilidade estocástica dos LLMs.
+Este projeto implementa um pipeline de Engenharia de IA para análise de textos clínicos psicanalíticos. O objetivo central foi criar uma arquitetura resiliente que garanta saídas estruturadas e seguras, independentemente da variabilidade estocástica das LLMs.
 
 A solução foi construída sobre três pilares:
 1.  **Orquestração de Estado:** LangGraph.
@@ -26,16 +26,26 @@ Essa abordagem simula um ambiente de produção real (padrão *Circuit Breaker*)
 
 ---
 
-## 3. Engenharia de Prompt (v1 vs. v2)
+## 3. Engenharia de Prompt (Análise Comparativa)
 
-A evolução dos prompts foi focada em **Controlabilidade**:
+A evolução dos prompts foi focada em aumentar a **Controlabilidade** da IA, garantindo que ela obedeça estritamente ao formato necessário para o software. O Mock foi gerado utilizando o Prompt v2.
 
-* **Prompt v1 (Raw):** Focado apenas na instrução semântica ("Analise o caso").
-    * *Problema:* O modelo retornava texto livre ou Markdown, quebrando o parser JSON.
-* **Prompt v2 (Structured):**
-    * **System Role:** Define a persona ("IA Clínica").
-    * **JSON Enforcement:** Instrução explícita e reiterada para saída JSON.
-    * **Constraint Injection:** As regras de negócio (ex: "lista entre 3 e 6 itens") foram injetadas no texto do prompt. Isso aumenta o acerto "Zero-shot", reduzindo a carga de rejeição do validador.
+### Por que o Prompt v2 é superior?
+
+1.  **Redução de Carga no Parser (Parsing Overhead):**
+    * **No v1:** O modelo tendia a misturar a análise clínica com "conversa" (ex: *"Aqui está a análise que você pediu..."*). Isso exigiria tratamentos complexos de string no Python para limpar o texto antes de tentar ler o JSON.
+    * **No v2:** Ao impor estritamente o formato JSON e proibir texto adicional, a resposta do modelo torna-se diretamente consumível pela função `json.loads()`, eliminando a necessidade de pós-processamento de texto (*sanitize*).
+
+2.  **Injeção de Regras de Negócio (Constraint Injection):**
+    * **No v1:** O modelo "adivinhava" quantos temas ou hipóteses gerar. Frequentemente gerava 10 itens ou apenas 1, o que causava falha imediata na validação do Pydantic (que exige, por exemplo, entre 3 e 6).
+    * **No v2:** As restrições de tamanho (`min_length`, `max_length`) foram traduzidas do código Python para linguagem natural dentro do prompt. Isso permite que o modelo realize uma **auto-validação durante a geração**, garantindo que o JSON já nasça compatível com as regras do sistema.
+
+3.  **Ancoragem de Persona (Persona Anchoring):**
+    * **No v1:** Sem definição clara de papel, o modelo oscilava entre uma linguagem de autoajuda e um tom técnico.
+    * **No v2:** A instrução de *System Role* ("Você é uma IA Clínica...") ancora o espaço latente do modelo em terminologias da psicanálise, garantindo que o campo `risk_assessment` seja preenchido com rigor técnico e não com opiniões leigas.
+
+4.  **Minimização de Alucinação de Estrutura:**
+    * O Prompt v2 define explicitamente os nomes das chaves (`themes`, `signifiers`). No v1, o modelo poderia inventar chaves como `topicos_principais` ou `palavras_chave`, o que quebraria o contrato de interface (Schema) esperado pelo backend.
 
 ---
 
@@ -56,14 +66,16 @@ Implementei um `@field_validator` na classe `ClinicalOutput`:
 
 ---
 
-## 5. Orquestração (LangGraph)
+## 5. Estratégia de Persistência (Single Output File)
 
-Optei pelo LangGraph (`StateGraph`) para desacoplar a geração da validação.
-* **Generation Node:** Responsável apenas pelo I/O com o modelo (ou Mock).
-* **Validation Node:** Atua como *Guardrail*. Se o JSON vier quebrado ou fugir das regras, o erro é catalogado no estado (`errors`) sem interromper o processamento em lote dos outros arquivos.
+Embora o sistema processe múltiplos arquivos de entrada (`.txt`) separadamente, optei por consolidar todos os resultados em um único arquivo de saída (`results.json`).
 
----
+### Motivação da Decisão:
+1.  **Visão de Lote (Batch Observability):**
+    O arquivo único atua não apenas como armazenamento de dados, mas como um **Log de Execução do Lote**. Ele contém metadados globais (total processado, contagem de sucessos/falhas) que seriam perdidos ou difíceis de calcular se tivéssemos espalhado 50 arquivos JSON soltos numa pasta.
 
-## 6. Conclusão
+2.  **Facilidade de Integração (Downstream):**
+    Para um sistema consumidor, é muito mais eficiente ingerir um único payload JSON contendo a lista de pacientes processados do que ter que varrer diretórios e abrir conexões de arquivo para cada paciente individualmente.
 
-O sistema entregue demonstra maturidade de engenharia ao priorizar a continuidade do serviço. Mesmo diante de falhas na API externa, o pipeline mantém sua integridade funcional, validando dados e gerando relatórios estruturados prontos para integração em sistemas de prontuário eletrônico.
+3.  **Atomicidade do Relatório:**
+    Conforme solicitado no requisito do case, o sistema precisa gerar um relatório final. Ao manter tudo junto, o próprio arquivo de dados já serve como o relatório final, unificando as análises clínicas com os *metadados operacionais* (erros e status).

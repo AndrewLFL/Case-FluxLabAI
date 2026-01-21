@@ -2,13 +2,15 @@
 
 Este projeto implementa um pipeline de Engenharia de IA para processamento de textos clínicos. O sistema utiliza **LangGraph** para orquestração de fluxo e **Pydantic** para validação rigorosa de dados (Structured Output), garantindo que a saída do modelo atenda a regras de negócio clínicas.
 
-## ⚠️ Nota Importante sobre a Execução
+## 🔑 Configuração da API (OpenAI)
 
-**Status Atual: MOCK MODE ATIVO**
+Para que o pipeline utilize o modelo real (GPT-4o-mini), é necessário configurar uma chave de API da OpenAI.
 
-Durante o desenvolvimento, a chave de API fornecida retornou erro `429 - Billing Not Active` (conta sem saldo). Para garantir a avaliação da arquitetura de engenharia (validações, fluxo de grafo e estruturação de dados), o sistema foi configurado para usar um **Mock (Simulação)** no nó de geração.
+1. Crie um arquivo chamado `.env` na raiz do projeto (mesma pasta do `pipeline.py`).
+2. Adicione sua chave de API neste arquivo seguindo o formato abaixo:
 
-Isso permite testar todo o pipeline (Leitura -> Geração Simulada -> Validação Pydantic -> Relatório) sem dependência da API externa.
+```env
+OPENAI_API_KEY=sk-proj-sua-chave-aqui...
 
 ## 📋 Funcionalidades
 

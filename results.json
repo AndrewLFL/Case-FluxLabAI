@@ -1,8 +1,8 @@
 {
   "prompt_version": "v2",
-  "total": 1,
+  "total": 2,
   "metrics": {
-    "ok": 1,
+    "ok": 2,
     "failed": 0
   },
   "results": [
@@ -11,7 +11,51 @@
       "ok": true,
       "errors": [],
       "output": {
-        "analysis": "O paciente apresenta uma clara manifestação de resistência transferencial através do manejo do tempo e da palavra. \n            O atraso recorrente ('sempre') configura-se como um acting out, \n            uma tentativa de controlar o setting analítico ou evitar o contato com conteúdos angustiantes. \n            A percepção de que faz isso 'de propósito' sugere um insight incipiente sobre a determinação inconsciente de seus atos e uma possível formação de compromisso sintomática. \n            O silêncio que se segue à chegada atua como uma barreira secundária, reforçando a recusa em se entregar à associação livre. \n            Essa dinâmica aponta para uma dificuldade em lidar com a demanda do Outro, \n            possivelmente expressando hostilidade latente ou medo da dependência.",
+        "analysis": "O paciente apresenta uma clara manifestação de resistência transferencial através do manejo do tempo e da palavra. O atraso recorrente ('sempre') configura-se como um acting out, uma tentativa de controlar o setting analítico ou evitar o contato com conteúdos angustiantes. A percepção de que faz isso 'de propósito' sugere um insight incipiente sobre a determinação inconsciente de seus atos e uma possível formação de compromisso sintomática. O silêncio que se segue à chegada atua como uma barreira secundária, reforçando a recusa em se entregar à associação livre. Essa dinâmica aponta para uma dificuldade em lidar com a demanda do Outro, possivelmente expressando hostilidade latente ou medo da dependência.",
+        "themes": [
+          "Resistência",
+          "Transferência",
+          "Controle",
+          "Silêncio",
+          "Tempo"
+        ],
+        "signifiers": [
+          "Atrasado",
+          "Propósito",
+          "Silêncio",
+          "Sempre",
+          "Chego"
+        ],
+        "hypotheses": [
+          "O atraso funciona como uma defesa contra a angústia de castração ou vulnerabilidade na sessão.",
+          "O silêncio é uma extensão da agressividade passiva manifestada pelo atraso.",
+          "A intencionalidade percebida indica um gozo na manutenção do sintoma de evitação."
+        ],
+        "questions": [
+          "O que você sente ou pensa nos minutos exatos antes de sair para a sessão?",
+          "A quem esse 'propósito' de se atrasar estaria endereçado?",
+          "O silêncio, quando você chega, é vivido como vazio ou como excesso de pensamentos?",
+          "Existem outras situações em sua vida onde o atraso é uma regra?"
+        ],
+        "risk_assessment": {
+          "level": "baixo",
+          "signals": [
+            "Ausência de ideação suicida ou agressiva explícita",
+            "Discurso focado em mecanismos de defesa neuróticos"
+          ]
+        },
+        "clinical_report": {
+          "required": false,
+          "summary": "Paciente relata padrão de resistência caracterizado por atrasos sistemáticos e mutismo subsequente, reconhecendo certa intencionalidade no ato."
+        }
+      }
+    },
+    {
+      "file": "text_2.txt",
+      "ok": true,
+      "errors": [],
+      "output": {
+        "analysis": "O paciente apresenta uma clara manifestação de resistência transferencial através do manejo do tempo e da palavra. O atraso recorrente ('sempre') configura-se como um acting out, uma tentativa de controlar o setting analítico ou evitar o contato com conteúdos angustiantes. A percepção de que faz isso 'de propósito' sugere um insight incipiente sobre a determinação inconsciente de seus atos e uma possível formação de compromisso sintomática. O silêncio que se segue à chegada atua como uma barreira secundária, reforçando a recusa em se entregar à associação livre. Essa dinâmica aponta para uma dificuldade em lidar com a demanda do Outro, possivelmente expressando hostilidade latente ou medo da dependência.",
         "themes": [
           "Resistência",
           "Transferência",
